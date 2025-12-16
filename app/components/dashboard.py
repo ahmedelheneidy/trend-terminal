@@ -73,7 +73,7 @@ def fetch_market_overview(fetcher: DataFetcher, indicators: IndicatorCalculator,
         # Determine trend
         if ind_values.ema20 and ind_values.ema50:
             if ind_values.close > ind_values.ema20 and ind_values.ema20 > ind_values.ema50:
-                trend = SignalDirection.BULLISH
+                trend: SignalDirection = SignalDirection.BULLISH
             elif ind_values.close < ind_values.ema20 and ind_values.ema20 < ind_values.ema50:
                 trend = SignalDirection.BEARISH
             else:

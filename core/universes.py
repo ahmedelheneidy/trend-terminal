@@ -342,8 +342,18 @@ class UniverseLoader:
             logger.warning(f"Unknown universe: {name}, defaulting to S&P 500")
             tickers.update(SP500_TICKERS)
         
-        # Add watchlist if requested
-        if include_watchlist and name != 'watchlist':
+        # Add watchlist if requested, but avoid contaminating style-specific
+        # universes (penny, scalp, swing, long_term, momentum) which should
+        # remain "pure" and not automatically pull in large caps from the
+        # user's personal watchlist.
+        if include_watchlist and name not in (
+            'watchlist',
+            'penny',
+            'scalp', 'scalping', 'day', 'daytrading',
+            'swing', 'swing_trade', 'swingtrading',
+            'long_term', 'longterm', 'investment', 'invest',
+            'momentum', 'momo', 'high_beta',
+        ):
             tickers.update(self.get_watchlist())
         
         return sorted(list(tickers))
