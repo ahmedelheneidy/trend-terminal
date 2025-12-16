@@ -1,0 +1,51 @@
+# Trend Terminal - Custom Watchlist
+# Add one ticker per line
+# Lines starting with # are comments
+
+# Large Cap Tech
+AAPL
+MSFT
+GOOGL
+AMZN
+NVDA
+META
+TSLA
+
+# Semiconductors
+AMD
+INTC
+AVGO
+QCOM
+
+# Finance
+JPM
+BAC
+GS
+V
+MA
+
+# Healthcare
+JNJ
+UNH
+PFE
+ABBV
+
+# Consumer
+WMT
+COST
+HD
+NKE
+
+# Energy
+XOM
+CVX
+
+# Industrial
+CAT
+BA
+GE
+
+# Communication
+DIS
+NFLX
+CMCSA

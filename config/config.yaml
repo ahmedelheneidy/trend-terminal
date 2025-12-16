@@ -1,0 +1,274 @@
+# ===========================================
+# Trend Terminal - Configuration File
+# ===========================================
+
+# Application Info
+app:
+  name: "Trend Terminal"
+  version: "1.0.0"
+  description: "Professional Stock Scanning & Signal Detection"
+
+# ---------------------------------------------
+# Data Sources Configuration
+# ---------------------------------------------
+data:
+  # Default universe to scan
+  default_universe: "sp500"  # sp500, nasdaq100, watchlist
+  
+  # Cache settings (hours)
+  cache:
+    ohlcv_expiry: 24
+    news_expiry: 1
+    fundamentals_expiry: 24
+  
+  # Historical data lookback (days)
+  lookback_days: 365
+
+# ---------------------------------------------
+# Technical Indicators Configuration
+# ---------------------------------------------
+indicators:
+  # Exponential Moving Averages
+  ema_short: 20
+  ema_long: 50
+  
+  # Relative Strength Index
+  rsi_period: 14
+  rsi_bullish_min: 55
+  rsi_bullish_max: 70
+  rsi_bearish_min: 30
+  rsi_bearish_max: 45
+  
+  # Volume Analysis
+  volume_avg_period: 30
+  volume_spike_threshold: 1.5
+
+# ---------------------------------------------
+# Signal Scoring Configuration
+# ---------------------------------------------
+signals:
+  # Scoring weights (must sum to 1.0)
+  weights:
+    technical: 0.60
+    volume: 0.20
+    news: 0.20
+  
+  # Trend score components (each out of 20, total 100)
+  trend_score:
+    price_above_ema20: 20
+    price_above_ema50: 20
+    ema20_above_ema50: 20
+    rsi_in_band: 20
+    volume_spike: 20
+  
+  # Trending gate thresholds
+  trending_gate:
+    min_price_change_1d: 0.02  # 2%
+    min_volume_spike: 1.5
+  
+  # Minimum score to consider a signal
+  min_signal_score: 40
+  
+  # Confidence calculation
+  confidence:
+    high_threshold: 75
+    medium_threshold: 50
+
+# ---------------------------------------------
+# News Analysis Configuration
+# ---------------------------------------------
+news:
+  # Lookback period for news (hours)
+  lookback_hours: 48
+  
+  # Freshness decay (exponential)
+  decay_rate: 0.1
+  
+  # Category keywords
+  categories:
+    earnings:
+      - "earnings"
+      - "quarterly"
+      - "revenue"
+      - "EPS"
+      - "profit"
+      - "loss"
+      - "guidance"
+      - "forecast"
+    
+    upgrade_downgrade:
+      - "upgrade"
+      - "downgrade"
+      - "price target"
+      - "rating"
+      - "analyst"
+      - "buy"
+      - "sell"
+      - "hold"
+      - "outperform"
+      - "underperform"
+    
+    ma:  # Mergers & Acquisitions
+      - "acquisition"
+      - "merger"
+      - "takeover"
+      - "buyout"
+      - "deal"
+      - "bid"
+    
+    regulatory:
+      - "FDA"
+      - "SEC"
+      - "regulation"
+      - "approval"
+      - "clearance"
+      - "compliance"
+      - "antitrust"
+    
+    legal:
+      - "lawsuit"
+      - "investigation"
+      - "sued"
+      - "settlement"
+      - "fraud"
+      - "fine"
+      - "penalty"
+    
+    product:
+      - "launch"
+      - "partnership"
+      - "contract"
+      - "innovation"
+      - "patent"
+      - "technology"
+  
+  # Sentiment keywords
+  sentiment:
+    bullish:
+      - "surge"
+      - "soar"
+      - "rally"
+      - "jump"
+      - "beat"
+      - "exceed"
+      - "strong"
+      - "growth"
+      - "upgrade"
+      - "positive"
+      - "record"
+      - "breakthrough"
+    
+    bearish:
+      - "drop"
+      - "fall"
+      - "plunge"
+      - "miss"
+      - "decline"
+      - "weak"
+      - "downgrade"
+      - "negative"
+      - "concern"
+      - "warning"
+      - "cut"
+      - "layoff"
+
+# ---------------------------------------------
+# Backtesting Configuration
+# ---------------------------------------------
+backtest:
+  # Default holding period (days)
+  default_holding_period: 5
+  
+  # Available holding periods
+  holding_periods: [3, 5, 10, 20]
+  
+  # Exit strategy: "fixed" or "signal_flip"
+  default_exit_strategy: "fixed"
+  
+  # Transaction costs
+  costs:
+    commission_per_trade: 0.0  # Flat fee per trade
+    slippage_pct: 0.001  # 0.1% slippage
+  
+  # Default date range (days back from today)
+  default_lookback_days: 252  # ~1 year
+
+# ---------------------------------------------
+# Notifications Configuration
+# ---------------------------------------------
+notifications:
+  # Enable/disable notifications
+  enabled: false
+  
+  # Telegram settings
+  telegram:
+    enabled: true
+    # Token and chat_id come from .env
+  
+  # Alert thresholds
+  thresholds:
+    min_score: 70
+    max_alerts_per_day: 20
+  
+  # Quiet hours (24h format)
+  quiet_hours:
+    start: "22:00"
+    end: "08:00"
+  
+  # Schedule (24h format)
+  schedule:
+    enabled: false
+    time: "09:30"  # Market open
+
+# ---------------------------------------------
+# LLM Configuration
+# ---------------------------------------------
+llm:
+  # Enable AI-powered insights
+  enabled: true
+  
+  # Model settings (override via .env)
+  model: "gpt-4o-mini"
+  max_tokens: 1000
+  temperature: 0.7
+  
+  # Features
+  features:
+    market_summary: true
+    signal_explanation: true
+    news_synthesis: true
+    backtest_analysis: true
+
+# ---------------------------------------------
+# UI Configuration
+# ---------------------------------------------
+ui:
+  # Dashboard settings
+  dashboard:
+    top_n_signals: 10
+    default_index: "SPY"
+    available_indices:
+      - "SPY"
+      - "QQQ"
+      - "DIA"
+      - "IWM"
+  
+  # Screener settings
+  screener:
+    default_sort: "final_score"
+    max_results: 100
+    max_backtest_tickers: 20
+  
+  # Chart settings
+  charts:
+    default_period: "6mo"
+    show_volume: true
+    theme: "plotly_dark"
+
+# ---------------------------------------------
+# Logging Configuration
+# ---------------------------------------------
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/trend_terminal.log"
